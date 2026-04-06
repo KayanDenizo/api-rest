@@ -1,3 +1,4 @@
+// Um erro lançado por nos, um erro mais especifico, por isso o tratamento de erro
 class AppError {
     message: string
     statusCode: number

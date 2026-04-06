@@ -18,6 +18,10 @@ class ProductsController {
     create(request: Request, response: Response) {
         const { name, price } = request.body
 
+        if (!name || !price) {
+            throw new AppError("Nome do Produto e preço são obrigatórios!") // requisição ruim
+        }
+
         // throw new Error("Errro de exemplo")
         throw new AppError("Erro ao tentar criar um produto!")
 
