@@ -1,5 +1,6 @@
 import { Request, Response } from "express"
 import { AppError } from "../utils/AppError"
+import { z } from "zod"
 class ProductsController {
     /**
      * index - GET para listar varios registros
@@ -16,24 +17,30 @@ class ProductsController {
     }
 
     create(request: Request, response: Response) {
-        const { name, price } = request.body
 
-        if (!name) {
-            throw new AppError("Nome do Produto é obrigatório!") // requisição ruim
-        }
+        const bodySchema = z.object({
+            name: z.string(),
+            price: z.number()
+        })
 
-        if (name.trim.length < 6) {
-            throw new AppError("Nome do produto precisa ter pelo menos 6 caracteres") // requisição ruim
+        const { name, price } = bodySchema.parse(request.body)
 
-        }
+        // if (!name) {
+        //     throw new AppError("Nome do Produto é obrigatório!") // requisição ruim
+        // }
 
-        if (!price) {
-            throw new AppError("Preço é obrigatório!") // requisição ruim
-        }
+        // if (name.trim.length < 6) {
+        //     throw new AppError("Nome do produto precisa ter pelo menos 6 caracteres") // requisição ruim
 
-        if (price < 0) {
-            throw new AppError("Preço não pode ser menor que 0") // requisição ruim
-        }
+        // }
+
+        // if (!price) {
+        //     throw new AppError("Preço é obrigatório!") // requisição ruim
+        // }
+
+        // if (price < 0) {
+        //     throw new AppError("Preço não pode ser menor que 0") // requisição ruim
+        // }
 
         // throw new Error("Errro de exemplo")
         throw new AppError("Erro ao tentar criar um produto!")
